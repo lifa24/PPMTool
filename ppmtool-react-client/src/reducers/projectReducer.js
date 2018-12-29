@@ -12,7 +12,6 @@ export default function(state = initialState, action) {
         ...state,
         projects: action.payload
       };
-
     default:
       return state;
   }
