@@ -23,6 +23,7 @@ class UpdateProject extends Component {
                     type="text"
                     className="form-control form-control-lg "
                     placeholder="Project Name"
+                    name="projectName"
                   />
                 </div>
                 <div className="form-group">
@@ -30,6 +31,7 @@ class UpdateProject extends Component {
                     type="text"
                     className="form-control form-control-lg"
                     placeholder="Unique Project ID"
+                    name="projectIdentifier"
                     disabled
                   />
                 </div>
@@ -37,6 +39,7 @@ class UpdateProject extends Component {
                   <textarea
                     className="form-control form-control-lg"
                     placeholder="Project Description"
+                    name="description"
                   />
                 </div>
                 <h6>Start Date</h6>
