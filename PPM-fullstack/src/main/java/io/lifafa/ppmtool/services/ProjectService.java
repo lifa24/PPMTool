@@ -18,17 +18,18 @@ public class ProjectService {
 
     public Project saveOrUpdateProject(Project project){
         try{
-            project.setProjectIdentifier(project.getProjectIdentifier().toUpperCase());
+            String id= project.getProjectIdentifier().toUpperCase();
+            project.setProjectIdentifier(id);
 
             if(project.getId()==null){
                 Backlog backlog = new Backlog();
                 project.setBacklog(backlog);
                 backlog.setProject(project);
-                backlog.setProjectIdentifier(project.getProjectIdentifier().toUpperCase());
+                backlog.setProjectIdentifier(id);
             }
 
             if(project.getId()!=null){
-                project.setBacklog(backlogRepository.findByProjectIdentifier(project.getProjectIdentifier().toUpperCase()));
+                project.setBacklog(backlogRepository.findByProjectIdentifier(id));
             }
 
             return projectRepository.save(project);
