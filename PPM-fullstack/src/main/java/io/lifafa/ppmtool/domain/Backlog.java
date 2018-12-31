@@ -3,6 +3,8 @@ package io.lifafa.ppmtool.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Backlog {
@@ -19,7 +21,8 @@ public class Backlog {
     private Project project;
 
     //oneTo Many projectTasks
-
+    @OneToMany(cascade = CascadeType.ALL,fetch=FetchType.EAGER,mappedBy = "backlog")
+    private List<ProjectTask> projectTask = new ArrayList<>();
 
     public Backlog() {
     }
@@ -54,5 +57,13 @@ public class Backlog {
 
     public void setProjectIdentifier(String projectIdentifier) {
         this.projectIdentifier = projectIdentifier;
+    }
+
+    public List<ProjectTask> getProjectTask() {
+        return projectTask;
+    }
+
+    public void setProjectTask(List<ProjectTask> projectTask) {
+        this.projectTask = projectTask;
     }
 }
