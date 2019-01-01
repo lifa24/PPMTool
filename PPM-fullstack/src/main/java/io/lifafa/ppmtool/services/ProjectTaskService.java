@@ -5,6 +5,7 @@ import io.lifafa.ppmtool.domain.ProjectTask;
 import io.lifafa.ppmtool.repositories.BacklogRepository;
 import io.lifafa.ppmtool.repositories.ProjectTaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -44,6 +45,11 @@ public class ProjectTaskService {
         if(projectTask.getStatus()=="" || projectTask.getStatus()==null){
             projectTask.setStatus("TO_DO");
         }
-        return projectTaskRepository.save(projectTask);    }
+        return projectTaskRepository.save(projectTask);
+    }
+
+    public Iterable<ProjectTask> findBacklogById(String id){
+        return projectTaskRepository.findByProjectIdentifierOrderByPriority(id);
+    }
 
 }
