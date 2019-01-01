@@ -1,8 +1,11 @@
 package io.lifafa.ppmtool.services;
 
 import io.lifafa.ppmtool.domain.Backlog;
+import io.lifafa.ppmtool.domain.Project;
 import io.lifafa.ppmtool.domain.ProjectTask;
+import io.lifafa.ppmtool.exceptions.ProjectNotFoundException;
 import io.lifafa.ppmtool.repositories.BacklogRepository;
+import io.lifafa.ppmtool.repositories.ProjectRepository;
 import io.lifafa.ppmtool.repositories.ProjectTaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,38 +20,55 @@ public class ProjectTaskService {
     @Autowired
     private ProjectTaskRepository projectTaskRepository;
 
+    @Autowired
+    private ProjectRepository projectRepository;
+
     public ProjectTask addProjectTask(String projectIdentifier, ProjectTask projectTask){
-        //PTs to be added to a specfic project, project != null, BL exists
-        Backlog backlog = backlogRepository.findByProjectIdentifier(projectIdentifier);
 
-        //set the bl to pt
-        projectTask.setBacklog(backlog);
+        try{
+            //PTs to be added to a specfic project, project != null, BL exists
+            Backlog backlog = backlogRepository.findByProjectIdentifier(projectIdentifier);
 
-        //we want our project sequence to be like this: IDPRO-1 IDPRO-2 ...100 101
-        Integer BacklogSequence = backlog.getPTSequence();
+            //set the bl to pt
+            projectTask.setBacklog(backlog);
 
-        //Update the BL SEQUENCE
-        BacklogSequence++;
-        backlog.setPTSequence(BacklogSequence);
+            //we want our project sequence to be like this: IDPRO-1 IDPRO-2 ...100 101
+            Integer BacklogSequence = backlog.getPTSequence();
 
-        //Add Sequence to Project Task
-        projectTask.setProjectSequence(projectIdentifier+"-"+BacklogSequence);
-        projectTask.setProjectIdentifier(projectIdentifier);
+            //Update the BL SEQUENCE
+            BacklogSequence++;
+            backlog.setPTSequence(BacklogSequence);
 
-        //INITIAL priority when priority null
-        //In the future we need projectPriority()==0 to handle the form
-        if(projectTask.getPriority()==null){
-            projectTask.setPriority(3);
+            //Add Sequence to Project Task
+            projectTask.setProjectSequence(projectIdentifier+"-"+BacklogSequence);
+            projectTask.setProjectIdentifier(projectIdentifier);
+
+            //INITIAL priority when priority null
+            //In the future we need projectPriority()==0 to handle the form
+            if(projectTask.getPriority()==null){
+                projectTask.setPriority(3);
+            }
+
+            //INITIAL status when status is null
+            if(projectTask.getStatus()=="" || projectTask.getStatus()==null){
+                projectTask.setStatus("TO_DO");
+            }
+            return projectTaskRepository.save(projectTask);
+
+        }catch(Exception e){
+            throw new ProjectNotFoundException("Project Not Found!");
         }
 
-        //INITIAL status when status is null
-        if(projectTask.getStatus()=="" || projectTask.getStatus()==null){
-            projectTask.setStatus("TO_DO");
-        }
-        return projectTaskRepository.save(projectTask);
+
     }
 
     public Iterable<ProjectTask> findBacklogById(String id){
+
+        Project project = projectRepository.findByProjectIdentifier(id);
+        if(project==null){
+            throw new ProjectNotFoundException("Project with ID: '"+id+"' does not exist");
+        }
+
         return projectTaskRepository.findByProjectIdentifierOrderByPriority(id);
     }
 
