@@ -48,6 +48,6 @@ export const getProjectTask = (
       payload: res.data
     });
   } catch (err) {
-    history.push("dashboard");
+    history.push("/dashboard");
   }
 };
