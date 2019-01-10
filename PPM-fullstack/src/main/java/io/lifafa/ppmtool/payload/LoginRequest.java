@@ -3,10 +3,10 @@ package io.lifafa.ppmtool.payload;
 import javax.validation.constraints.NotBlank;
 
 public class LoginRequest {
-    @NotBlank(message = "Username can not be blank")
-    private String username;
 
-    @NotBlank(message = "Password can not be blank")
+    @NotBlank(message = "Username cannot be blank")
+    private String username;
+    @NotBlank(message = "Password cannot be blank")
     private String password;
 
     public String getUsername() {
