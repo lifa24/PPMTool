@@ -53,7 +53,7 @@ public class ProjectTaskService {
             }
 
             //Fix bug with priority in Spring Boot Server, needs to check null first
-            if(projectTask.getPriority()==0||projectTask.getPriority()==null){ //In the future we need projectTask.getPriority()== 0 to handle the form
+            if(projectTask.getPriority()==null||projectTask.getPriority()==0){ //In the future we need projectTask.getPriority()== 0 to handle the form
                 projectTask.setPriority(3);
             }
 
