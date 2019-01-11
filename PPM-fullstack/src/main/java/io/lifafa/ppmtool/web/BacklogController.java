@@ -40,9 +40,9 @@ public class BacklogController {
     }
 
     @GetMapping("/{backlog_id}")
-    public Iterable<ProjectTask> getProjectBacklog(@PathVariable String backlog_id){
+    public Iterable<ProjectTask> getProjectBacklog(@PathVariable String backlog_id,Principal principal){
 
-        return projectTaskService.findBacklogById(backlog_id);
+        return projectTaskService.findBacklogById(backlog_id,principal.getName()d );
 
     }
 
