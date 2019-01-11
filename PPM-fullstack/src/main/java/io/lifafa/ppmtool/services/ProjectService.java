@@ -10,7 +10,6 @@ import io.lifafa.ppmtool.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.security.Principal;
 
 @Service
 public class ProjectService {
@@ -65,8 +64,8 @@ public class ProjectService {
         return project;
     }
 
-    public Iterable<Project> findAllProject(){
-        return projectRepository.findAll();
+    public Iterable<Project> findAllProject(String username){
+        return projectRepository.findAllByProjectLeader(username);
     }
 
     public void deleteProjectByIdentifier(String projectId){
