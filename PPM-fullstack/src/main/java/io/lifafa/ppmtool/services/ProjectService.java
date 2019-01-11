@@ -2,11 +2,15 @@ package io.lifafa.ppmtool.services;
 
 import io.lifafa.ppmtool.domain.Backlog;
 import io.lifafa.ppmtool.domain.Project;
+import io.lifafa.ppmtool.domain.User;
 import io.lifafa.ppmtool.exceptions.ProjectIdException;
 import io.lifafa.ppmtool.repositories.BacklogRepository;
 import io.lifafa.ppmtool.repositories.ProjectRepository;
+import io.lifafa.ppmtool.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.security.Principal;
 
 @Service
 public class ProjectService {
@@ -16,8 +20,17 @@ public class ProjectService {
     @Autowired
     private BacklogRepository backlogRepository;
 
-    public Project saveOrUpdateProject(Project project){
+    @Autowired
+    private UserRepository userRepository;
+
+    public Project saveOrUpdateProject(Project project, String username){
         try{
+
+            User user = userRepository.findByUsername(username);
+
+            project.setUser(user);
+            project.setProjectLeader(user.getUsername());
+
             String id= project.getProjectIdentifier().toUpperCase();
             project.setProjectIdentifier(id);
 
