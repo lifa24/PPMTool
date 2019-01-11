@@ -4,6 +4,7 @@ import io.lifafa.ppmtool.domain.Backlog;
 import io.lifafa.ppmtool.domain.Project;
 import io.lifafa.ppmtool.domain.User;
 import io.lifafa.ppmtool.exceptions.ProjectIdException;
+import io.lifafa.ppmtool.exceptions.ProjectNotFoundException;
 import io.lifafa.ppmtool.repositories.BacklogRepository;
 import io.lifafa.ppmtool.repositories.ProjectRepository;
 import io.lifafa.ppmtool.repositories.UserRepository;
@@ -52,7 +53,7 @@ public class ProjectService {
 
     }
 
-    public Project findProjectByIdentifier(String projectId){
+    public Project findProjectByIdentifier(String projectId, String username){
 
 
         Project project = projectRepository.findByProjectIdentifier(projectId.toUpperCase());
@@ -60,6 +61,10 @@ public class ProjectService {
         if(project == null){
             throw new ProjectIdException("Project ID '"+projectId+ "' does not exist ");
 
+        }
+
+        if(!project.getProjectLeader().equals(username)){
+            throw  new ProjectNotFoundException("Project not found in your account");
         }
         return project;
     }
@@ -74,6 +79,8 @@ public class ProjectService {
         if(project ==null){
             throw new ProjectIdException("Cannot Project with ID '"+projectId+"'. This project doesn't exist.");
         }
+
+
 
         projectRepository.delete(project);
     }
