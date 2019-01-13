@@ -12,6 +12,7 @@ import ProjectBoard from "./components/ProjectBoard/ProjectBoard";
 import AddProjectTask from "./components/ProjectBoard/ProjectTasks/AddProjectTask";
 import UpdateProjectTask from "./components/ProjectBoard/ProjectTasks/UpdateProjectTask";
 import Landing from "./components/Layout/Landing";
+import Register from "./components/UserManagement/Register";
 
 class App extends Component {
   render() {
@@ -25,6 +26,7 @@ class App extends Component {
             }
 
             <Route exact path="/" component={Landing} />
+            <Route exact path="/register" component={Register} />
 
             {
               //Private Route
