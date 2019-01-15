@@ -1,5 +1,6 @@
 package io.lifafa.ppmtool.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -18,6 +19,8 @@ public class ProjectTask {
     private String acceptanceCriteria;
     private String status;
     private Integer priority;
+
+    @JsonFormat(pattern = "mm-dd-yyyy")
     private Date dueDate;
 
     //ManyToOne with Backlog
@@ -29,7 +32,9 @@ public class ProjectTask {
     @Column(updatable = false)
     private String projectIdentifier;
 
+    @JsonFormat(pattern = "mm-dd-yyyy")
     private Date create_At;
+    @JsonFormat(pattern = "mm-dd-yyyy")
     private Date update_At;
 
     public ProjectTask() {
