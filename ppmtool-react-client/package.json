@@ -22,9 +22,6 @@
     "eject": "react-scripts eject"
   },
   "proxy": "https://project-management-tool-fa.herokuapp.com",
-  "eslintConfig": {
-    "extends": "react-app"
-  },
   "browserslist": [
     ">0.2%",
     "not dead",

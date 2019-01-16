@@ -26,7 +26,6 @@ export default function(state = initialState, action) {
           project => project.projectIdentifier !== action.payload
         )
       };
-
     default:
       return state;
   }

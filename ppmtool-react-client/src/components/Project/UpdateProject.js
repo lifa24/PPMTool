@@ -26,7 +26,6 @@ class UpdateProject extends Component {
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });
     }
-
     const {
       id,
       projectName,
@@ -83,7 +82,7 @@ class UpdateProject extends Component {
                 <div className="form-group">
                   <input
                     type="text"
-                    className={classnames("form-control form-control-lg ", {
+                    className={classnames("form-control form-control-lg", {
                       "is-invalid": errors.projectName
                     })}
                     placeholder="Project Name"
